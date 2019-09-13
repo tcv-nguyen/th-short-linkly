@@ -16,6 +16,7 @@ RSpec.describe ShortLink, type: :model do
       subject { build(:short_link, long_link: long_link, user_id: 1) }
 
       it 'is not valid' do
+        short_link
         is_expected.to_not be_valid
       end
     end
