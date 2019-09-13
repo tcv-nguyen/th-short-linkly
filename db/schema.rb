@@ -20,7 +20,8 @@ ActiveRecord::Schema.define(version: 2019_09_13_151208) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
-    t.integer "encoded_id"
+    t.string "encoded_id"
+    t.index ["encoded_id"], name: "index_short_links_on_encoded_id", unique: true
   end
 
 end
