@@ -103,4 +103,27 @@ RSpec.describe ShortLinksController, type: :controller do
       end
     end
   end
+
+  describe 'GET #analytic' do
+    let!(:short_link) { create(:short_link) }
+    let(:analytic) { get :analytic, params: { id: short_link.encoded_id } }
+
+    context 'with valid encoded_id' do
+      it 'return 0 as default counter' do
+        analytic_counter_should_eq_to(0)
+      end
+
+      it 'increase counter on each request' do
+        send_multiple_request(5)
+        analytic_counter_should_eq_to(5)
+      end
+    end
+
+    context 'with invalid encoded_id' do
+      it 'returns a 404' do
+        get :analytic, params: { id: 0 }
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end

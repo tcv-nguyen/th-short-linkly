@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_13_151208) do
+ActiveRecord::Schema.define(version: 2019_09_13_165138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2019_09_13_151208) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.string "encoded_id"
+    t.integer "counter", default: 0
     t.index ["encoded_id"], name: "index_short_links_on_encoded_id", unique: true
   end
 

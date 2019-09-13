@@ -1,9 +1,10 @@
 class ShortLinksController < ApplicationController
   include ActionController::MimeResponds
 
-  before_action :set_short_link, only: :show
+  before_action :set_short_link, only: [:show, :analytic]
 
   def show
+    @short_link&.update_columns(counter: @short_link.counter + 1)
     redirect_to @short_link.long_link, status: :moved_permanently
   end
 
@@ -19,6 +20,23 @@ class ShortLinksController < ApplicationController
           render json: payload, status: 201
         else
           render json: short_link.errors, status: 422
+        end
+      end
+    end
+  end
+
+  def analytic
+    respond_to do |format|
+      format.html do
+        if @short_link&.persisted?
+          payload = {
+            long_link: @short_link.long_link,
+            short_link: short_link_url(@short_link.encoded_id),
+            counter: @short_link.counter
+          }
+          render json: payload, status: 200
+        else
+          render json: {}, status: 404
         end
       end
     end

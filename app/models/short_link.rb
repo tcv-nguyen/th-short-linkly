@@ -1,4 +1,5 @@
 class ShortLink < ApplicationRecord
+  # TODO: Create index [:long_link, :user_id] to table short_links to prevent duplicate records saved simultaneously
   validates :long_link, presence: true, uniqueness: { scope: :user_id }
   validates :user_id, presence: true
   validates :encoded_id, uniqueness: true
